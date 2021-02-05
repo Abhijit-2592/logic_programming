@@ -56,7 +56,7 @@ sibling(X, Y) :- parent(Z, X), parent(Z, Y), X\=Y.
 fcousin(X, Y) :- grandparent(Z, X), grandparent(Z, Y), \+ sibling(X,Y), X\=Y.
 
 % second cousin relation
-% both share the same grandparent and they aren't siblings. \+ is negation in prolog
+% both share the same great_grandparent and they aren't siblings. \+ is negation in prolog
 scousin(X, Y) :- great_grandparent(Z, X), great_grandparent(Z, Y), \+ sibling(X,Y), X\=Y.
 
 % niece
@@ -83,8 +83,8 @@ manc(X,Y) :- anc(X,Y), male(X).
 
 % same_generation_cousins
 % correct this
-same_generation_cousin(X, X).
-same_generation_cousin(X,Y) :- anc(Z1, X), anc(Z2, Y), same_generation_cousin(Z1, Z2).
+same_generation_cousins(X,Y):- fcousin(X,Y).
+same_generation_cousins(X,Y):- parent(U,X), parent(V,Y), same_generation_cousins(U,V), \+ sibling(X,Y), X\=Y, U\=V.
 
 % married
 married(X,Y) :- child(Z,X), child(Z,Y), X\=Y.
