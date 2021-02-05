@@ -40,7 +40,7 @@ quotient(X, Y, Z) :- add(s(0), W, Z), add(V, Y, X),quotient(V, Y, W).
 div(X,Y,Q,R) :- rem(X,Y,R), quotient(X,Y,Q).
 
 % fibonacci
-fib(s(0), 0). % [1] = 0
+fib(s(0), s(0)). % [1] = 1
 fib(s(s(0)), s(0)). % [2] = 1
 % fib(n-2) + fib(n-1)
 % n-2 is X-1, n-1 = X
