@@ -88,3 +88,6 @@ same_generation_cousins(X,Y):- parent(U,X), parent(V,Y), same_generation_cousins
 
 % married
 married(X,Y) :- child(Z,X), child(Z,Y), X\=Y.
+
+% great_nephew with marriage
+great_nephew_married(X,Y) :- great_nephew(X,Y) ; married(Z, Y), great_nephew(X, Z).
