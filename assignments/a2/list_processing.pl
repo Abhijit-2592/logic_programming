@@ -45,6 +45,11 @@ adjacent(X,Y,[H|T]) :- adjacent(X,Y,T).
 last(T,[T]).
 last(X,[H|T]) :- last(X,T).
 
+% delete all occurances
+delete([X|Xs],X,Ys) :- delete(Xs,X,Ys).
+delete([X|Xs], Z, [X|Ys]) :- X\=Z, delete(Xs, Z, Ys).
+delete([],X,[]).
+
 % double
 double([],[]).
 double([H|T1], [H,H|T2]) :- double(T1,T2).
@@ -54,3 +59,11 @@ double([H|T1], [H,H|T2]) :- double(T1,T2).
 substitute(X,Y,[],[]).
 substitute(X,Y,[X|Tx],[Y|Ty]) :- substitute(X,Y,Tx,Ty).
 substitute(X,Y,[Z|Tz1],[Z|Tz2]) :- X\=Z, substitute(X,Y,Tz1,Tz2).
+
+% no_doubles
+no_doubles([], []).
+no_doubles([X], [X]).
+% when the head is present as duplicate in the tail
+no_doubles([X|Xs], [X|Ys]) :- member(X, Xs), delete(Xs, X, Zs), no_doubles(Zs, Ys).
+% when the  head is not present as duplicate in the tail
+no_doubles([X|Xs], [X|Ys]) :- \+member(X, Xs), no_doubles(Xs, Ys).
