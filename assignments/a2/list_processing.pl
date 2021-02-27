@@ -67,3 +67,56 @@ no_doubles([X], [X]).
 no_doubles([X|Xs], [X|Ys]) :- member(X, Xs), delete(Xs, X, Zs), no_doubles(Zs, Ys).
 % when the  head is not present as duplicate in the tail
 no_doubles([X|Xs], [X|Ys]) :- \+member(X, Xs), no_doubles(Xs, Ys).
+
+
+even_permutation(Xs, Ys):-
+    permute(Xs, Ys),
+    sopod(Xs, 1, D),
+    sopod(Ys, 1, E),
+    D = E.
+  
+% odd_permutation(Xs, Ys) is true if Ys is an odd permutation of Xs.
+odd_permutation(Xs, Ys):- 
+    permute(Xs, Ys), 
+    sopod(Xs, 1, D), 
+    sopod(Ys, 1, E), 
+    D =\= E.
+
+% permute
+permute([], []).
+permute([X|Xs], Ys1):- permute(Xs, Ys), pick(X, Ys1, Ys).
+
+pick(X, [X|Xs], Xs).
+pick(X, [Y|Ys], [Y|Zs]):- pick(X, Ys, Zs).
+
+% sign of product of differences
+sopod([], D, D).
+sopod([Y|Xs], D0, D):- 
+    sopod_new(Xs, Y, D0, D1), 
+    sopod(Xs, D1, D).
+
+sopod_new([], _, D, D).
+sopod_new([X|Xs], Y, D0, D):-  
+    Y =\= X, 
+    D1 is D0 * (Y - X) // abs(Y - X), 
+    sopod_new(Xs, Y, D1, D).
+
+
+% merge sort
+merge_sort([], []).
+merge_sort([X], [X]).
+merge_sort([Odd,Even|Xs], Ys):-
+  split([Odd,Even|Xs], Odds, Evens),
+  merge_sort(Odds, Os),
+  merge_sort(Evens, Es),
+  ordered_merge(Os, Es, Ys).
+
+% split(Xs, Os, Es) is true if Os is a list containing the odd positioned
+split([], [], []).
+split([X|Xs], [X|Os], Es):-split(Xs, Es, Os).
+
+% ordered_merge(Xs, Ys, Zs) is true if Zs is an ordered list obtained
+ordered_merge([], Ys, Ys).
+ordered_merge([X|Xs], [], [X|Xs]).
+ordered_merge([X|Xs], [Y|Ys], [X|Zs]):-X < Y, ordered_merge(Xs, [Y|Ys], Zs).
+ordered_merge([X|Xs], [Y|Ys], [Y|Zs]):-X >= Y, ordered_merge([X|Xs], Ys, Zs).
