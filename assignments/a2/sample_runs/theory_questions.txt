@@ -1,0 +1,4 @@
+3.2.1: i: In the given  subsequence code, the output need not  be  continuous, but the sublist code the output must be continuous.
+3.2.1: iv: the 3.16a has  complexity  of O(N^2) and 3.16b is tail recursive and has O(N) as the time complexity
+3.3.1 ii: The meaning of this variant of select is that this select removes/pops the item from the given list and returns the List which does not contain that item.
+
