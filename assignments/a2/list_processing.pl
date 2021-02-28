@@ -68,40 +68,6 @@ no_doubles([X|Xs], [X|Ys]) :- member(X, Xs), delete(Xs, X, Zs), no_doubles(Zs, Y
 % when the  head is not present as duplicate in the tail
 no_doubles([X|Xs], [X|Ys]) :- \+member(X, Xs), no_doubles(Xs, Ys).
 
-
-even_permutation(Xs, Ys):-
-    permute(Xs, Ys),
-    sopod(Xs, 1, D),
-    sopod(Ys, 1, E),
-    D = E.
-  
-% odd_permutation(Xs, Ys) is true if Ys is an odd permutation of Xs.
-odd_permutation(Xs, Ys):- 
-    permute(Xs, Ys), 
-    sopod(Xs, 1, D), 
-    sopod(Ys, 1, E), 
-    D =\= E.
-
-% permute
-permute([], []).
-permute([X|Xs], Ys1):- permute(Xs, Ys), pick(X, Ys1, Ys).
-
-pick(X, [X|Xs], Xs).
-pick(X, [Y|Ys], [Y|Zs]):- pick(X, Ys, Zs).
-
-% sign of product of differences
-sopod([], D, D).
-sopod([Y|Xs], D0, D):- 
-    sopod_new(Xs, Y, D0, D1), 
-    sopod(Xs, D1, D).
-
-sopod_new([], _, D, D).
-sopod_new([X|Xs], Y, D0, D):-  
-    Y =\= X, 
-    D1 is D0 * (Y - X) // abs(Y - X), 
-    sopod_new(Xs, Y, D1, D).
-
-
 % merge sort
 merge_sort([], []).
 merge_sort([X], [X]).
