@@ -27,8 +27,6 @@ makeFull([P|Ps],[_|Rs],[P|Ls],Plast) :-
 writeList([]) :- nl.
 writeList([H|T]) :- write(H), write(' '), writeList(T).
 
-%-------------------- OLD PREDICATES ----------------------
-% append(X,Y,Z): appends Y to X to give Z.
 append([],[],[]).
 append(Y,[],Y).
 append([],Y,Y).

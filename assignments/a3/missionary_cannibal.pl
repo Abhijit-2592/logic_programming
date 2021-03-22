@@ -102,10 +102,10 @@ missionaryCannibalSolve(state(CL1,ML1,B1,CR1,MR1),state(CL_final,ML_final,B_fina
 
 %Solution found
 missionaryCannibalSolve(state(CL_final,ML_final,B_final,CR_final,MR_final),state(CL_final,ML_final,B_final,CR_final,MR_final),_,MovesList):- rev(MovesList,MovesListr),
-printSteps(MovesListr).
+writeList(MovesListr).
 
 % % Printing
-printSteps([]) :- nl. 
-printSteps([[A,B]|T]) :- 
+writeList([]) :- nl. 
+writeList([[A,B]|T]) :- 
    	write(B), write(' -> '), write(A), nl,
-    printSteps(T).
+    writeList(T).
