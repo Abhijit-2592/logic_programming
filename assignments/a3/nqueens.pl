@@ -16,7 +16,7 @@ safe([]).
 safe([Q|Qs]) :- safe(Qs), \+ attack(Q, Qs).  %  Q does not attack any of the queens in Qs
 
 % attack
-attack(X, Xs) :- attack=(X, 1, Xs).  % mid  value/accumulator  is the  column number, for the starting case, X is in the 0th column. and 1 is the next column
+attack(X, Xs) :- attack(X, 1, Xs).  % mid  value/accumulator  is the  column number, for the starting case, X is in the 0th column. and 1 is the next column
 % Y is  in position  N
 % Queen Y is in row num Y and col num N
 attack(X, N, [Y|Ys]) :- X is Y+N; X is Y-N. % checks if in diagonal. Same as seeing  slope is 1
@@ -30,5 +30,6 @@ queens(N,Qs) :-range(1,N,Ns), queens(Ns, [], Qs). % accumulate the safe queens i
 queens(UnplacedQs, SafeQs, Qs) :- select(Q, UnplacedQs, UnplacedQs1), 
                                   \+ attack(Q, SafeQs),
                                   queens(UnplacedQs1, [Q|SafeQs], Qs). % recurse.
+queens([],Qs,Qs).
 
 % another solution called as forward checking which  we will look at it later!
