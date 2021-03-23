@@ -1,27 +1,26 @@
 snake(_,_,[]).
 
 snake(P,R,[C]) :- 
-    makeFull(P,R,C,_), writeList(C).
+    create_pattern(P,R,C,_), writeList(C).
 
 snake(P,R,[C1,C2|Cs]) :- 
-    makeFull(P,R,C1,P1),
-    makeFull(P1,R,Temp,P2),
-    reverse(Temp,C2),
+    create_pattern(P,R,C1,P1),
+    create_pattern(P1,R,T,P2),
+    reverse(T,C2),
     writeList(C1), writeList(C2),
     snake(P2,R,Cs).
 
-%----------------------------------------------------------
-% rotate([a,b,c],[b,c,a]) is true.
-rotate([],[]).
-rotate([X|T],R) :-
+% check_rotate([a,b,c],[b,c,a]) is true.
+check_rotate([],[]).
+check_rotate([X|T],R) :-
     append(T,[X],R).
 
-% makeFull(Pattern,Row,R,Pn): Fills Row with cyclic 
+% make(Pattern,Row,R,Pn): Fills Row with cyclic 
 % patterns to give R, with Pn as the last rotation. 
-makeFull(Plast,[],[],Plast).
-makeFull([P|Ps],[_|Rs],[P|Ls],Plast) :- 
-    rotate([P|Ps],Pnext),
-    makeFull(Pnext,Rs,Ls,Plast).
+create_pattern(Plast,[],[],Plast).
+create_pattern([P|Ps],[_|Rs],[P|Ls],Plast) :- 
+    check_rotate([P|Ps],Pnext),
+    create_pattern(Pnext,Rs,Ls,Plast).
 
 % writes the List on a new-line
 writeList([]) :- nl.
