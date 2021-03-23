@@ -1,0 +1,1 @@
+% block's world with weights
