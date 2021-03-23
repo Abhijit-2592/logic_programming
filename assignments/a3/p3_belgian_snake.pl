@@ -7,7 +7,7 @@ snake(P,R,[C]) :-
 snake(P,R,[C1,C2|Cs]) :- 
     create_pattern(P,R,C1,P1),
     create_pattern(P1,R,T,P2),
-    reverse(T,C2),
+    rev(T,C2),
     writeList(C1), writeList(C2),
     snake(P2,R,Cs).
 
