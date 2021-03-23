@@ -37,5 +37,3 @@ queens(UnplacedQs, SafeQs, Qs) :- select(Q, UnplacedQs, UnplacedQs1),
                                   \+ attack(Q, SafeQs),
                                   queens(UnplacedQs1, [Q|SafeQs], Qs). % recurse.
 queens([],Qs,Qs).
-
-% another solution called as forward checking which  we will look at it later!
