@@ -1,3 +1,4 @@
+% usage: 
 snake(_,_,[]).
 
 snake(P,R,[C]) :- 
@@ -26,13 +27,11 @@ create_pattern([P|Ps],[_|Rs],[P|Ls],Plast) :-
 writeList([]) :- nl.
 writeList([H|T]) :- write(H), write(' '), writeList(T).
 
-append([],[],[]).
-append(Y,[],Y).
-append([],Y,Y).
-append([H|X],Y,[H|Z]) :- append(X,Y,Z).
+% append L3 is obtained after appending L2 to L1
+append([],L,L).
+append([X|T], Y, [X|Z]) :- append(T,Y,Z).
 
-% b: Reverse-accumulate
-reverse(Xs,Ys) :- reverse(Xs,[],Ys).
-
-reverse([X|Xs],Acc,Ys) :- reverse(Xs,[X|Acc],Ys).
-reverse([],Ys,Ys).
+% tail recursive reverse
+rev(L1, L2) :- rev(L1, [], L2).
+rev([], P, P).
+rev([H|T], P, R) :- rev(T, [H|P], R).
