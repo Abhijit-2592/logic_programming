@@ -1,3 +1,9 @@
+% usage queens(4, N).
+
+%% select
+select(X, [X|T], T).
+select(X, [Y|T], [Y|R]):- select(X,T,R).
+
 % generate a list of numbers between M and N
 range(M,N,[M|Ns]):- M<N, M1 is M+1, range(M1, N, Ns).
 range(N,N,[N]). 

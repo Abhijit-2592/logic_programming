@@ -11,50 +11,50 @@ preferences(ruth, [avraham,david,binyamin,chaim,elazar]).
 preferences(sarah, [chaim,binyamin,david,avraham,elazar]).
 preferences(tamar, [david,binyamin,chaim,elazar,avraham]).
 
-% given a list of men and women check if the marriages are stable
-stable([], _, _).
-stable([Man|Men], Women, Marriages):-
-  stable_women(Women, Man, Marriages),
-  stable(Men, Women, Marriages).
 
-% given a list of women and a single man check if the marriages are stable
+% rest(X, Ys, Zs) is true if X is a member of the list Ys, and the list Zs is the rest of the list following X
+rest(X, [X|T], T).
+rest(X, [_|T], Zs):-rest(X, T, Zs).
+
+%% select
+select(X, [X|T], T).
+select(X, [Y|T], [Y|R]):- select(X,T,R).
+
+% given a list of ManList and WomanList check if the marriages are stable
+stable([], _, _).
+stable([Man|ManList], WomanList, MarriageList):-
+  stable_women(WomanList, Man, MarriageList),
+  stable(ManList, WomanList, MarriageList).
+
+% given a list of WomanList and a single man check if the marriages are stable
 stable_women([], _, _).
-stable_women([Woman|Women], Man, Marriages):-
-  \+unstable(Man, Woman, Marriages),
-  stable_women(Women, Man, Marriages).
+stable_women([Woman|WomanList], Man, MarriageList):-
+  \+unstable(Man, Woman, MarriageList),
+  stable_women(WomanList, Man, MarriageList).
 
 % Given a Man and Woman and a list of marriages see  if it is unstable
-unstable(Man, Woman, Marriages):-
-  married(Man, Wife, Marriages),
-  married(Husband, Woman, Marriages),
-  prefers(Man, Woman, Wife),
-  prefers(Woman, Man, Husband).
+unstable(Man, Woman, MarriageList):-
+  married(Man, Wife, MarriageList),
+  married(Husband, Woman, MarriageList),
+  preferOther(Man, Woman, Wife),
+  preferOther(Woman, Man, Husband).
   
-married(Man, Woman, Marriages):-
-  rest(marriage(Man, Woman), Marriages, _).  
+married(Man, Woman, MarriageList):-
+  rest(marriage(Man, Woman), MarriageList, _).  
 
-% prefers(Person, OtherPerson, Spouse) is true if the Person prefers the
-prefers(Person, OtherPerson, Spouse):-
-  preferences(Person, Preferences),
-  rest(OtherPerson, Preferences, Rest),
-  rest(Spouse, Rest, _).
-  
-% rest(X, Ys, Zs) is true if X is a member of the list Ys, and the list   */
-rest(X, [X|Ys], Ys):-!.
-rest(X, [_|Ys], Zs):-rest(X, Ys, Zs).
-
-% select(X, Ys, Zs) is true if Zs is the result of removing one           */
-select(X, [X|Ys], Ys).
-select(X, [Y|Ys], [Y|Zs]):-select(X, Ys, Zs).
-
+% preferOther(P, Other, Q) is true if the P preferOther the other instead of Q
+preferOther(P, Other, Q):-
+  preferences(P, Preferences),
+  rest(Other, Preferences, Remaining),
+  rest(Q, Remaining, _).
 
 % Generate all possible cases and test the marriage stability
-stableMarriageProblem(Men, Women, Marriages):-
-  generateMarriages(Men, Women, Marriages),
-  stable(Men, Women, Marriages).
+stableMarriageProblem(ManList, WomanList, MarriageList):-
+  generateMarriages(ManList, WomanList, MarriageList),
+  stable(ManList, WomanList, MarriageList).
 
 % generate all possible marriages from the given list
 generateMarriages([], [], []).
-generateMarriages([Man|Men], Women, [marriage(Man,Woman)|Marriages]):-
-  select(Woman, Women, Women1),
-  generateMarriages(Men, Women1, Marriages).
+generateMarriages([Man|ManList], WomanList, [marriage(Man,Woman)|MarriageList]):-
+  select(Woman, WomanList, WomanList2),
+  generateMarriages(ManList, WomanList2, MarriageList).
