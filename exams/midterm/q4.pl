@@ -1,12 +1,4 @@
 % Sudoku
-% generate a list of numbers between M and N
-range(M,N,[M|Ns]):- M<N, M1 is M+1, range(M1, N, Ns).
-range(N,N,[N]). 
-
-% select
-select(X, [X|Xs], Xs).
-select(X, [Y|Ys], [Y|Zs]):- select(X,Ys,Zs).
-
 % True if a list is unique
 allDiff(L) :- \+ (select(X,L,R), member(X,R)).
 
