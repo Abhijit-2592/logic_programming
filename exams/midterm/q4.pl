@@ -32,12 +32,11 @@ testGrid(Grid):-
     getColVector(Grid, 0, A), allDiff(A),
     getColVector(Grid, 1, B), allDiff(B),
     getColVector(Grid, 2, C), allDiff(C),
-    getColVector(Grid, 3, D), allDiff(D),
-    writeGrid(Grid).
+    getColVector(Grid, 3, D), allDiff(D).
 
 % solution using generate test paradigm
 minisudoku:-
-    generateGrid2X2(Grid), testGrid(Grid).
+    generateGrid2X2(Grid), testGrid(Grid), writeGrid(Grid).
 
 % writes a given 2D grid to console
 writeGrid([R1, R2, R3, R4|_]):-
