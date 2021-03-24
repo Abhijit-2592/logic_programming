@@ -1,0 +1,7 @@
+The missionary cannibal solution is  coded slightly differently
+missionaryCannibalSolve(StartingState, EndingState, ExploredStates, MovesList)
+Represent state as `state(CL,ML,B,CR,MR) 
+where:
+CL is cannibals in the left, ML is missionaries in the left, B is boat position (left/right), CR is cannibals in the right and MR is missionaries in the right
+for starting in left: missionaryCannibalSolve( state(3,3,left,0,0),state(0,0,right,3,3),[state(3,3,left,0,0)],_).
+for starting in right: missionaryCannibalSolve(state(0,0,right,3,3),  state(3,3,left,0,0),[state(0,0,right,3,3)],_).
