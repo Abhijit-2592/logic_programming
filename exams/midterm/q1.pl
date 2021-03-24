@@ -8,7 +8,9 @@ countRabbits(Heads, Legs, C) :-
 find_rabbits_and_chickens(Heads, Legs, RabbitCount, ChickenCount):-
     % First find the number of rabbits
     countRabbits(Heads, Legs, RabbitCount),
-    ChickenCount is Heads - RabbitCount.
+    RabbitCount>=0, integer(RabbitCount),
+    ChickenCount is Heads - RabbitCount,
+    ChickenCount>=0, integer(ChickenCount).
 
 % generate a list of numbers between M and N
 range(M,N,[M|Ns]):- M<N, M1 is M+1, range(M1, N, Ns).
