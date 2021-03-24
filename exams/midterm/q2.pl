@@ -12,7 +12,7 @@ place(r).
 
 weight(a, 2.2, green).
 weight(b, 6.1, red).
-weight(c, 10.0, blue).
+weight(c, 8.2, blue).
 
 % on(X,Y) -> where X is block and Y is block/place, means X is on Y
 % intial states are: [on(a,b) ,on(b,p) ,on(c,r)]
