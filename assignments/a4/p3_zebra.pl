@@ -1,6 +1,6 @@
 % usage zebraPuzzle([Englishman, Spaniard, Japanese, Italian, Norwegian], 
 % [Green, Red, Yellow, Blue, White], 
-% [Painter, Diplomat, Violinist, Doctor, Sculptor], 
+% [Kools, Chesterfield, OldGold, LuckyStrike, Parliament], 
 % [Dog, Zebra, Fox, Snail, Horse], 
 % [Juice, Water, Tea, Coffee, Milk])
 
@@ -30,26 +30,26 @@ Norwegian Drinks water and the Japanese owns the zebra
 */
 :- use_module(library(clpfd)).
 
-zebraPuzzle(Men,Color,Profession,Animal,Drink) :-
+zebraPuzzle(Men,Color,Cigarette,Animal,Drink) :-
     
     % create the Domain
     Men ins 1..5, 
     Color ins 1..5, 
-    Profession ins 1..5, 
+    Cigarette ins 1..5, 
     Animal ins 1..5, 
     Drink ins 1..5,
 
     % make sure everything is different
     all_different(Men), 
     all_different(Color), 
-    all_different(Profession), 
+    all_different(Cigarette), 
     all_different(Animal), 
     all_different(Drink),
 
     % create list
     Men = [Men1,Men2,Men3,Men4,Men5], 
     Color = [Color1,Color2,Color3,Color4,Color5], 
-    Profession = [Profession1,Profession2,Profession3,Profession4,Profession5], 
+    Cigarette = [Cigarette1,Cigarette2,Cigarette3,Cigarette4,Cigarette5], 
     Animal = [Animal1,Animal2,Animal3,Animal4,Animal5], 
     Drink = [Drink1,Drink2,Drink3,Drink4,Drink5],
 
@@ -57,28 +57,28 @@ zebraPuzzle(Men,Color,Profession,Animal,Drink) :-
     % rules 1 - 5
     Men1 #= Color2, 
     Men2 #= Animal1, 
-    Men3 #= Profession1, 
+    Men3 #= Cigarette1, 
     Men4 #= Drink3, 
     Men5 #= 1,
 
     % rules 6 - 10
     Color1 #= Drink4, 
     Color1 #= Color5 + 1, 
-    Profession5 #= Animal4, 
-    Profession2 #= Color3, 
+    Cigarette5 #= Animal4, 
+    Cigarette2 #= Color3, 
     Drink5 #= 3,
 
     % rules 11 - 14
     Men5 #= Color4 + 1 #\/ Men5 #= Color4 - 1, 
-    Profession3 #= Drink1,
-    Animal3 #= Profession4 + 1 #\/ Animal3 #= Profession4 - 1,
-    Animal5 #= Profession2 + 1 #\/ Animal5 #= Profession2 - 1,
+    Cigarette3 #= Drink1,
+    Animal3 #= Cigarette4 + 1 #\/ Animal3 #= Cigarette4 - 1,
+    Animal5 #= Cigarette2 + 1 #\/ Animal5 #= Cigarette2 - 1,
 
     % First fail (ff). Label the leftmost variable with smallest domain next, in order to detect infeasibility early. This is often a good strategy.
     % from swipl docs
     labeling([ff],Men), 
     labeling([ff],Color), 
-    labeling([ff],Profession), 
+    labeling([ff],Cigarette), 
     labeling([ff],Animal), 
     labeling([ff],Drink),
 
