@@ -126,14 +126,19 @@ solve_last_row(Grid, FinalAns) :-
     % repeat solve until last Row
     solve_until_last_row(FlippedGrid, FinalAns).
 
-solve5X5(Grid, FinalAns):-
+lights_out(Grid):-
+    write("Given Grid: "), nl,
+    writeGrid(Grid),
+    write("The (Rows, Cols) to flip are given below: "), nl,
     solve_until_last_row(Grid, FlippedGrid),
-    solve_last_row(FlippedGrid, FinalAns).
+    solve_last_row(FlippedGrid, FinalAns),
+    write("The grid after following the above procedure: "), nl,
+    writeGrid(FinalAns).
 
 
 
 
-
+% write the moves
 writeMove((R,C)):- write(R), write(", "), write(C), nl.
 % writes a given 2D grid to console
 writeGrid([R1, R2, R3, R4, R5|_]):-
